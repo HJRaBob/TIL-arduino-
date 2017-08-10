@@ -6,6 +6,9 @@ bool btn_2_last = LOW;
 bool flag_1 = false; //led1 state
 bool flag_2 = false; //led2 state
 
+bool i_flag = false; //led1 bright change check
+bool j_flag = false; //led2 bright change check
+
 int i=0,j=0; //pwm value
 bool debounce(bool last,int pin)
 {
@@ -40,14 +43,26 @@ void loop() {
 
   if(flag_1 == true){
     analogWrite(9,i%256);
-    i++;
+    if(i == 0 || i == 255){
+      i_flag = !i_flag;
+    }
+    if(i_flag)
+      i++;
+    else
+      i--;
   }else{
     analogWrite(9,0);
   }
 
   if(flag_2 == true){
     analogWrite(10,j%256);
-    j++;
+    if(j == 0 || j == 255){
+      j_flag = !j_flag;
+    }
+    if(j_flag)
+      j++;
+    else
+      j--;
   }else{
     analogWrite(10,0);
   }
